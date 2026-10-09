@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday!</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+</head>
+<body>
+    <header class="hero">
+        <div class="hero-content" data-aos="zoom-in" data-aos-duration="1200">
+            <h1>Happy Birthday!</h1>
+            <p class="subtitle">To 14 beautiful years of friendship and counting...</p>
+            <button id="celebrateBtn">Click for Magic ✨</button>
+        </div>
+        <div class="scroll-indicator">
+            <p>Scroll down</p>
+            <div class="arrow"></div>
+        </div>
+    </header>
+
+    <main>
+        <section class="story-section">
+            <div class="story-bg-photos">
+                <img src="Snapchat-1019011002.jpg.jpeg" class="floating-img float-1">
+                <img src="Snapchat-1108701876.jpg.jpeg" class="floating-img float-2">
+                <img src="Snapchat-1187899568.jpg.jpeg" class="floating-img float-3">
+                <img src="Snapchat-1503025018.jpg.jpeg" class="floating-img float-4">
+                <img src="Snapchat-1841916656.jpg.jpeg" class="floating-img float-5">
+                <img src="Snapchat-231559626.jpg.jpeg" class="floating-img float-6">
+                <img src="Snapchat-386739698.jpg.jpeg" class="floating-img float-7">
+                <img src="Snapchat-390855562.jpg.jpeg" class="floating-img float-8">
+                <img src="Snapchat-470176122.jpg.jpeg" class="floating-img float-9">
+                <img src="Snapchat-477938349.jpg.jpeg" class="floating-img float-10">
+                <img src="Snapchat-681173562.jpg.jpeg" class="floating-img float-11">
+                <img src="Snapchat-839058291.jpg.jpeg" class="floating-img float-12">
+            </div>
+            
+            <div class="container" data-aos="fade-up" data-aos-duration="1500">
+                <h2>Our Story</h2>
+                <div class="story-content">
+                    <p>My dearest friend,</p>
+                    <p>It feels absolutely surreal to say that we have been friends for <strong>14 years</strong>. Fourteen years! That's more than a decade of shared secrets, uncontrollable laughter, comforting hugs, and an endless stream of memories that I will cherish forever.</p>
+                    
+                    <p>Thinking back to when we first met, we were just kids with big dreams and silly jokes. Watching you grow into the incredible, strong, and beautiful woman you are today has been one of the greatest privileges of my life. You have this magical ability to light up any room you walk into, and your kindness knows no bounds.</p>
+                    
+                    <p>We've navigated the chaotic waters of growing up together. Through every heartbreak, every triumph, every awkward phase, and every major milestone, you have been my constant. You are my anchor when the world gets too heavy, and my favorite person to celebrate with when things go right.</p>
+
+                    <p>I still laugh when I think about all our crazy adventures—the late-night conversations that turned into early mornings, the inside jokes that no one else understands, and the dreams we plotted out for our futures. You are more than just a friend to me; you are my chosen family, my sister.</p>
+
+                    <p>Today is all about you. It's about celebrating your vibrant soul, your beautiful heart, and everything that makes you uniquely <em>you</em>. I hope your birthday is as wonderfully spectacular as you are. May this year bring you closer to all your dreams, fill your days with love, and wrap you in the happiness you so deeply deserve.</p>
+                    
+                    <p>Here's to the last 14 years, and to the next 14, 28, and beyond. I can't wait to continue writing this story with you.</p>
+
+                    <p class="signature">With all my love,<br>Your Best Friend</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEW: Surprise & Activities Section -->
+        <section class="surprise-section">
+            <div class="container" data-aos="zoom-in" data-aos-duration="1500">
+                <h2>A Little Extra Magic</h2>
+                <p style="text-align:center; margin-bottom: 30px; font-size: 1.2rem; color: #666;">Because 14 years deserves more than just one surprise...</p>
+                <p style="text-align:center; font-style: italic; color: #ff5e7e; margin-bottom: 40px;">(P.S. Try clicking the floating hearts hiding around the screen!)</p>
+                
+                <div class="interactive-grid">
+                    <!-- Box 1: The Magic 14 Reasons Game -->
+                    <div class="surprise-box" id="reasonsBox">
+                        <div class="box-icon">🎁</div>
+                        <h3>The Magic Gift Box</h3>
+                        <p>Keep tapping the box for 14 reasons why you are the absolute best</p>
+                        <div class="reason-display" id="reasonDisplay">Tap me!</div>
+                    </div>
+
+                    <!-- Box 2: The Secret Envelope -->
+                    <div class="surprise-box" id="envelopeContainer">
+                        <div class="envelope" id="envelope">
+                            <div class="flap"></div>
+                            <div class="letter">
+                                <p>You are my absolute favorite person in the world. Let's make this year the best one yet! 🥂</p>
+                            </div>
+                        </div>
+                        <h3>Secret Letter</h3>
+                        <p>Click the envelope to open</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="toast"></div>
+
+    <footer>
+        <p>Made with ❤️ for 14 years of friendship</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

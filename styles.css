@@ -151,51 +151,6 @@ h1, h2, h3 {
     z-index: 0;
 }
 
-.story-bg-photos {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    z-index: 1;
-}
-
-.floating-img {
-    position: absolute;
-    width: 240px;
-    height: 260px;
-    object-fit: cover;
-    border: 12px solid white;
-    border-bottom: 40px solid white;
-    box-shadow: 0 25px 50px rgba(0,0,0,0.25);
-    opacity: 0.95; 
-    border-radius: 4px;
-    pointer-events: none;
-}
-
-.float-1 { top: 5%; left: 2%; animation: floatA 12s infinite alternate ease-in-out; transform: rotate(-5deg); }
-.float-2 { top: 10%; right: 2%; animation: floatB 15s infinite alternate ease-in-out; width: 280px; height: 300px; transform: rotate(10deg); }
-.float-3 { top: 25%; left: -2%; animation: floatC 14s infinite alternate ease-in-out; transform: rotate(5deg); }
-.float-4 { top: 30%; right: 5%; animation: floatA 16s infinite alternate ease-in-out; transform: rotate(-8deg); }
-.float-5 { top: 45%; left: 5%; animation: floatB 18s infinite alternate ease-in-out; width: 260px; height: 280px; transform: rotate(-12deg); }
-.float-6 { top: 50%; right: 2%; animation: floatC 13s infinite alternate ease-in-out; width: 220px; height: 240px; transform: rotate(15deg); }
-.float-7 { top: 65%; left: 2%; animation: floatA 17s infinite alternate ease-in-out; width: 250px; height: 270px; transform: rotate(8deg); }
-.float-8 { top: 70%; right: 5%; animation: floatB 11s infinite alternate ease-in-out; transform: rotate(-10deg); }
-.float-9 { top: 85%; left: 5%; animation: floatC 15s infinite alternate ease-in-out; transform: rotate(-6deg); }
-.float-10 { top: 82%; right: 2%; animation: floatA 14s infinite alternate ease-in-out; width: 270px; height: 290px; transform: rotate(12deg); }
-.float-11 { top: 15%; left: 35%; animation: floatB 19s infinite alternate ease-in-out; z-index: -1; opacity: 0.4; }
-.float-12 { top: 75%; left: 45%; animation: floatC 16s infinite alternate ease-in-out; z-index: -1; opacity: 0.4; }
-
-@keyframes floatA {
-    0% { transform: translate(0, 0) rotate(-5deg); }
-    100% { transform: translate(30px, 40px) rotate(5deg); }
-}
-@keyframes floatB {
-    0% { transform: translate(0, 0) rotate(10deg); }
-    100% { transform: translate(-40px, 30px) rotate(-5deg); }
-}
-@keyframes floatC {
-    0% { transform: translate(0, 0) rotate(5deg); }
-    100% { transform: translate(30px, -30px) rotate(15deg); }
-}
-
 .container {
     max-width: 900px;
     margin: 0 auto;
@@ -234,7 +189,63 @@ h1, h2, h3 {
     margin-top: 50px;
 }
 
-/* --- NEW SURPRISE SECTION CSS --- */
+/* --- NEW PHOTO BLAST EFFECT CSS --- */
+#blastContainer {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    z-index: 99999;
+    pointer-events: none; /* Let clicks pass through the invisible background */
+    transition: opacity 1s ease;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(5px);
+    opacity: 0;
+}
+
+.blast-img {
+    position: absolute;
+    width: 200px;
+    height: 240px;
+    object-fit: cover;
+    border: 10px solid white;
+    border-bottom: 30px solid white;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    border-radius: 4px;
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(0deg) scale(0.2); /* Start from center */
+    transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: auto; 
+}
+
+.blast-img:hover {
+    transform: scale(1.1) !important;
+    z-index: 1000000;
+}
+
+#closeBlastBtn {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: linear-gradient(45deg, #d11149, #ff5e7e);
+    color: white;
+    border: none;
+    padding: 15px 35px;
+    font-size: 1.2rem;
+    font-family: 'Lora', serif;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    opacity: 0;
+    transition: all 0.5s ease;
+    pointer-events: auto;
+    z-index: 100000;
+    font-weight: bold;
+}
+#closeBlastBtn:hover {
+    transform: translateX(-50%) translateY(17px) scale(1.05);
+}
+
+/* --- SURPRISE SECTION CSS --- */
 .surprise-section {
     background: white;
     padding: 80px 20px;
@@ -404,5 +415,5 @@ footer {
     .hero h1 { font-size: 4rem; }
     .hero-content { padding: 2.5rem 2rem; width: 95%; }
     .story-content { padding: 40px 25px; font-size: 1.1rem; }
-    .floating-img { width: 140px; height: 160px; border-width: 8px; border-bottom-width: 25px; }
+    .blast-img { width: 140px; height: 160px; border-width: 8px; border-bottom-width: 25px; }
 }

@@ -61,7 +61,7 @@ celebrateBtn.addEventListener('click', () => {
     }, 250);
 });
 
-// --- THE 15-SECOND PHOTO BLAST EFFECT ---
+// --- THE 15-SECOND PHOTO BLAST EFFECT WITH DRAG & DROP ---
 
 const photoSources = [
     "Snapchat-1019011002.jpg.jpeg",
@@ -99,19 +99,20 @@ function triggerPhotoBlast() {
     // Reveal overlay
     setTimeout(() => { blastContainer.style.opacity = '1'; }, 10);
 
-    // Create a close button for the blast collage
     const closeBtn = document.createElement('button');
     closeBtn.innerText = "Close Memories ✖";
     closeBtn.id = "closeBlastBtn";
     closeBtn.onclick = () => {
         blastContainer.style.opacity = '0';
-        setTimeout(() => blastContainer.remove(), 1000); // Wait for fade out
+        setTimeout(() => blastContainer.remove(), 1000); 
     };
     blastContainer.appendChild(closeBtn);
 
-    // Center coordinates for explosion origin
     const centerX = window.innerWidth / 2;
     const centerY = window.innerHeight / 2;
+    
+    // Global tracker for z-index so clicked images always come to the absolute front
+    let highestZ = 100000;
 
     // Explode each photo outward
     photoSources.forEach((src, index) => {
@@ -125,23 +126,25 @@ function triggerPhotoBlast() {
         
         blastContainer.appendChild(img);
 
-        // Calculate random destination across the screen (polar coordinates)
         const angle = (index / photoSources.length) * Math.PI * 2 + (Math.random() * 0.5);
-        // Radius: spread them far out but keep them within screen mostly
         const maxRadius = Math.min(window.innerWidth, window.innerHeight) / 2;
         const radius = Math.random() * (maxRadius * 0.8) + (maxRadius * 0.2); 
         
         const destX = Math.cos(angle) * radius;
         const destY = Math.sin(angle) * radius;
-        const rotate = Math.random() * 80 - 40; // Random tilt between -40 and 40 deg
+        const rotate = Math.random() * 80 - 40; 
 
-        // Stagger the explosion slightly
+        // State trackers for dragging
+        let currentX = destX;
+        let currentY = destY;
+        let isDragging = false;
+        let startClientX, startClientY;
+
+        // Trigger the initial explosion animation
         setTimeout(() => {
-            // Apply transform to shoot them outwards from center
-            img.style.transform = `translate(calc(-50% + ${destX}px), calc(-50% + ${destY}px)) rotate(${rotate}deg) scale(1)`;
+            img.style.transform = `translate(calc(-50% + ${currentX}px), calc(-50% + ${currentY}px)) rotate(${rotate}deg) scale(1)`;
             img.style.opacity = '1';
             
-            // Pop some confetti with each photo landing
             confetti({
                 particleCount: 15,
                 spread: 30,
@@ -151,8 +154,66 @@ function triggerPhotoBlast() {
                 },
                 colors: ['#ffffff', '#ff99ac']
             });
+        }, 100 * index); 
 
-        }, 100 * index); // 100ms stagger between each photo
+        // --- DRAG AND DROP LOGIC (Mouse & Touch) ---
+        const bringToFront = () => {
+            highestZ += 1;
+            img.style.zIndex = highestZ;
+        };
+
+        const onDragStart = (e) => {
+            // only allow left clicks or touches
+            if (e.type === 'mousedown' && e.button !== 0) return;
+            e.preventDefault(); 
+            bringToFront();
+            isDragging = true;
+            
+            startClientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+            startClientY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
+            
+            // Remove the 1s easing transition so dragging follows the cursor instantly
+            img.style.transition = 'transform 0.1s ease, box-shadow 0.3s ease';
+            // Scale up slightly when picked up
+            img.style.transform = `translate(calc(-50% + ${currentX}px), calc(-50% + ${currentY}px)) rotate(${rotate}deg) scale(1.05)`;
+        };
+
+        const onDragMove = (e) => {
+            if (!isDragging) return;
+            e.preventDefault();
+            
+            const clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+            const clientY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
+            
+            const deltaX = clientX - startClientX;
+            const deltaY = clientY - startClientY;
+            
+            startClientX = clientX;
+            startClientY = clientY;
+            
+            currentX += deltaX;
+            currentY += deltaY;
+            
+            img.style.transform = `translate(calc(-50% + ${currentX}px), calc(-50% + ${currentY}px)) rotate(${rotate}deg) scale(1.05)`;
+        };
+
+        const onDragEnd = (e) => {
+            if (!isDragging) return;
+            isDragging = false;
+            // Restore normal scale when dropped
+            img.style.transform = `translate(calc(-50% + ${currentX}px), calc(-50% + ${currentY}px)) rotate(${rotate}deg) scale(1)`;
+        };
+
+        // Attach events to window/document for smooth tracking when moving fast
+        img.addEventListener('mousedown', onDragStart);
+        document.addEventListener('mousemove', onDragMove);
+        document.addEventListener('mouseup', onDragEnd);
+
+        // Touch events for mobile phones
+        img.addEventListener('touchstart', onDragStart, { passive: false });
+        document.addEventListener('touchmove', onDragMove, { passive: false });
+        document.addEventListener('touchend', onDragEnd);
+        document.addEventListener('touchcancel', onDragEnd);
     });
 
     // Fade in close button after explosion finishes

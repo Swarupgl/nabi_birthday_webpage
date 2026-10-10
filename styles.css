@@ -194,7 +194,7 @@ h1, h2, h3 {
     position: fixed;
     top: 0; left: 0; width: 100vw; height: 100vh;
     z-index: 99999;
-    pointer-events: none; /* Let clicks pass through the invisible background */
+    pointer-events: none; 
     transition: opacity 1s ease;
     background: rgba(0,0,0,0.4);
     backdrop-filter: blur(5px);
@@ -211,14 +211,18 @@ h1, h2, h3 {
     box-shadow: 0 20px 40px rgba(0,0,0,0.4);
     border-radius: 4px;
     opacity: 0;
-    transform: translate(-50%, -50%) rotate(0deg) scale(0.2); /* Start from center */
-    transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    pointer-events: auto; 
+    transform: translate(-50%, -50%) rotate(0deg) scale(0.2); 
+    /* The transition is handled via JS during drag, but this is the initial explosion */
+    transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 1s ease, box-shadow 0.3s ease;
+    pointer-events: auto; /* Let it be clicked */
+    cursor: grab; /* Shows the user they can grab it */
+    touch-action: none; /* Prevents mobile scrolling while dragging */
+    z-index: 100000;
 }
 
-.blast-img:hover {
-    transform: scale(1.1) !important;
-    z-index: 1000000;
+.blast-img:active {
+    cursor: grabbing;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.6);
 }
 
 #closeBlastBtn {
@@ -238,7 +242,7 @@ h1, h2, h3 {
     opacity: 0;
     transition: all 0.5s ease;
     pointer-events: auto;
-    z-index: 100000;
+    z-index: 200000;
     font-weight: bold;
 }
 #closeBlastBtn:hover {
